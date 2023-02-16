@@ -67,10 +67,6 @@ class MainActivity : AppCompatActivity() {
 
 > Full example can be found [here](https://github.com/kotlinize/dependency-injection-example)
 
-In Action:
-
-<img src="https://github.com/kotlinize/dependency-injection/blob/master/Dependency%20Injection%20Example.gif" width="275" height="600"/>
-
 ## Setup
 
 To setup, simply add this dependency to your project and everything should be ready to go!
