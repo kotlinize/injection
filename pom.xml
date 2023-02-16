@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kotlinizer</groupId>
     <artifactId>injection</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>Kotlin Dependency Injection</name>
     <description>Lightweight Dependency Injection solution for Kotlin Projects.</description>
     <url>https://www.github.com/kotlinize/injection</url>
@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-        <kotlin.version>1.8.10</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
     </properties>
 
     <distributionManagement>
