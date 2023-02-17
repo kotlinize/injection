@@ -74,7 +74,7 @@ To setup, simply add this dependency to your project and everything should be re
 ### Kotlin DSL
 ```kotlin
 dependencies {
-    implementation("com.kotlinizer:injection:1.0.4")
+    implementation("com.kotlinizer:injection:1.0.5")
 }
 ```
 
@@ -82,7 +82,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation 'com.kotlinizer:injection:1.0.4'
+    implementation 'com.kotlinizer:injection:1.0.5'
 }
 ```
 
@@ -91,6 +91,6 @@ dependencies {
 <dependency>
     <groupId>com.kotlinizer</groupId>
     <artifactId>injection</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
