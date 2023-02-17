@@ -9,7 +9,7 @@ import kotlin.test.*
 
 class InjectorTest {
 
-    private lateinit var injector: Injector
+    private val injector = Injector.instance
     private val testName = Name(
         firstName = FIRST_NAME,
         lastName = LAST_NAME,
@@ -25,8 +25,8 @@ class InjectorTest {
 
     @BeforeEach
     fun setup() {
-        // Given an Injection Implementation.
-        injector = Injector.instance
+        // Given an empty Injector
+        injector.unloadDependencies()
 
         // Given an object registered into the dependency injector.
         injector.register(
@@ -113,6 +113,28 @@ class InjectorTest {
         injector.addSubscriber(Long::class.java, TestSubscriber2())
 
         injector.publish(Name::class.java, testName)
+    }
+
+    @Test
+    fun testResolvingMultiple() {
+        Name("Kotlin", "Multiple-Test", 398478234L).apply {
+            registerToInjector("testtest")
+        }
+
+        // Given additional name registered.
+        val names = injector.resolveAll(Name::class.java)
+
+        // Assert both names were resolved.
+        assertTrue(names.size == 2, "Incorrect amount of Names Resolved.")
+
+        // Then remove the last added Name.
+        injector.unregister(Name::class.java, "testtest")
+
+        // Finally, assert the last name was removed.
+        val names2 = injector.resolveAll(Name::class.java)
+
+        // Assert there is only one Name left.
+        assertTrue(names2.size == 1, "Incorrect amount of Names Resolved.")
     }
 
     private data class Name(

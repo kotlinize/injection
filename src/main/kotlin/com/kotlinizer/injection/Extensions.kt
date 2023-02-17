@@ -3,13 +3,10 @@ package com.kotlinizer.injection
 /**
  * Assists in publishing any object to the dependency injector.
  *
- * @param injectorInstance The [IDependencyInjector] instance intended to be published to, if provided. If not provided,
- * the current instance will be used.
- * @param identifier The [String] value of the identifier that was used when registering a subscriber.
+ * @param identifier The [String] value of t he identifier that was used when registering a subscriber.
  */
-fun Any.publishToInjector(injectorInstance: Injector? = null, identifier: String? = null) {
-    injectorInstance?.publish(type = this.javaClass, data = this, identifier = identifier)
-        ?: Injector.instance.publish(type = this.javaClass, data = this, identifier = identifier)
+fun Any.publishToInjector(identifier: String? = null) {
+        Injector.instance.publish(type = this.javaClass, data = this, identifier = identifier)
 }
 
 /**

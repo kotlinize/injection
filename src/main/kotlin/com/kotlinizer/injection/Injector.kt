@@ -4,10 +4,13 @@ package com.kotlinizer.injection
 class Injector private constructor() {
 
     /**
-     * The Registry of items held by the Dependency com.kotlinizer.injection.Injector.
+     * The Registry of items held by the Dependency Injector.
      */
     private val registry = HashSet<RegistryItem<Any>>()
 
+    /**
+     * The Registry of all the classes that Subscribe to an event or class event.
+     */
     private val subscriberRegistry = HashSet<RegistryItem<Any>>()
 
     companion object {
@@ -23,7 +26,7 @@ class Injector private constructor() {
     }
 
     /**
-     * Registers a dependency into the Dependency com.kotlinizer.injection.Injector.
+     * Registers a dependency into the Dependency Injector.
      *
      * @param type The [Class] of the dependency to store.
      * @param provider The Value [T] to store.
@@ -41,7 +44,7 @@ class Injector private constructor() {
     }
 
     /**
-     * Unregisters a dependency from the Dependency com.kotlinizer.injection.Injector.
+     * Unregisters a dependency from the Dependency Injector.
      *
      * @param type The [Class] of the dependency to remove.
      * @param identifier The [String] Identifier to remove, if multiples are currently stored.
@@ -58,10 +61,21 @@ class Injector private constructor() {
      *
      * @param type The [Class] of the dependency to return.
      * @param identifier The [String] Identifier to return, if multiples are currently stored.
-     * @return The value [T] retrieved from the Dependency com.kotlinizer.injection.Injector.
+     * @return The value [T] retrieved from the Dependency Injector.
      */
     fun <T> resolve(type: Class<T>, identifier: String? = null): T? {
         return registry.find { identifier == it.identifier && type == it.clazz }?.item as? T
+    }
+
+    /**
+     * Resolves/Retrieves all of the dependencies of a provided type.
+     *
+     * @param type The [Class] type of the dependencies to return.
+     * @return A [List] of dependencies, [T], that are of the provided type. Empty List will be returned if no
+     * dependencies can be found.
+     */
+    fun <T> resolveAll(type: Class<T>): List<T> {
+        return registry.filter { it.clazz == type }.map { it.item } as? List<T> ?: emptyList()
     }
 
     /**
@@ -110,9 +124,11 @@ class Injector private constructor() {
      * @return The [Boolean] value whether the subscriber was successfully removed, or not.
      */
     fun <T> removeSubscriber(type: Class<T>, identifier: String? = null): Boolean {
-        subscriberRegistry.first { it.clazz == type && it.identifier == identifier }.let {
-            return subscriberRegistry.remove(it)
+        var isRemoved = false
+        subscriberRegistry.filter { it.clazz == type && it.identifier == identifier }.forEach {
+            isRemoved = subscriberRegistry.remove(it)
         }
+        return isRemoved
     }
 
     private data class RegistryItem<I>(
